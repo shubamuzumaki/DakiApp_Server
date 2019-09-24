@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="bson-3.9.0-sources">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Documents/JDBC_Mongo/bson-3.9.0.jar!/" />
+      <root url="jar://$USER_HOME$/Documents/JDBC_Mongo/mongodb-driver-3.9.0.jar!/" />
+      <root url="jar://$USER_HOME$/Documents/JDBC_Mongo/mongodb-driver-core-3.9.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/Documents/JDBC_Mongo/bson-3.9.0-sources.jar!/" />
+      <root url="jar://$USER_HOME$/Documents/JDBC_Mongo/mongodb-driver-3.9.0-sources.jar!/" />
+      <root url="jar://$USER_HOME$/Documents/JDBC_Mongo/mongodb-driver-core-3.9.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
