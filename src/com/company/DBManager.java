@@ -6,6 +6,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 //manages database
 public class DBManager
@@ -44,5 +45,17 @@ public class DBManager
         if(password.equals((String)clientDoc.get("password")))
             return true;
         return false;
+    }
+
+    public static String getUserId(String username , String password) throws IllegalArgumentException
+    {
+        Document clientDoc = userInfo.find(Filters.eq("username",username.toLowerCase())).first();
+        if(clientDoc == null)
+            throw new IllegalArgumentException("username is not registered with app");
+
+        if(password.equals(clientDoc.get("password")))
+            return clientDoc.getObjectId("_id").toString();
+
+        throw new IllegalArgumentException("Invalid Password.Please Provide Valid Password");
     }
 }

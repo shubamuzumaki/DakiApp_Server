@@ -19,4 +19,9 @@ public class RequestProcessor
         return request.split(CommunicationFlags.SEPARATOR_1)[1]
                       .split(CommunicationFlags.SEPARATOR_2)[1];
     }
+
+    public static String getUserObjId(String request)
+    {
+        return "";
+    }
 }
