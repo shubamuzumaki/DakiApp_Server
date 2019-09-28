@@ -78,10 +78,18 @@ public class ClientProcessor implements Runnable
                     break;
 //---------------------------------------------------------------------------------
                 case CommunicationFlags.ADD_FRIEND_REQUEST:
-                    System.out.println("User Asking For adding Friend");
-                    response = CommunicationFlags.ADD_FRIEND_RESPONSE_SUCCESSFULL + CommunicationFlags.SEPARATOR_1 + "Ashwani";
+                    String userObjId = RequestProcessor.getUserObjId(request);
+                    String friendId = RequestProcessor.getFriendId(request);
+                    boolean isFriendAdded = DBManager.addFriend(userObjId,friendId);
+
+                    if(isFriendAdded)
+                        response = CommunicationFlags.ADD_FRIEND_RESPONSE_SUCCESSFULL + CommunicationFlags.SEPARATOR_1 + friendId;
+                    else
+                        response = CommunicationFlags.ADD_FRIEND_RESPONSE_FAILED + CommunicationFlags.SEPARATOR_1 +friendId;
+
                     dout.writeUTF(response);
                     break;
+//---------------------------------------------------------------------------------
             }//switch
         }//try
         catch (Exception e)

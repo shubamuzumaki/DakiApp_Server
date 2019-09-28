@@ -5,10 +5,11 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
-import com.sun.javadoc.Doc;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
+import javax.print.Doc;
+import java.util.ArrayList;
 import java.util.List;
 
 //manages database
@@ -62,23 +63,17 @@ public class DBManager
         throw new IllegalArgumentException("Invalid Password.Please Provide Valid Password");
     }
 
-    public static String[] getFriendList(String userObjId) throws IllegalArgumentException
+    public static ArrayList<String> getFriendList(String userObjId) throws Exception
     {
-        Document clientDoc = userInfo.find(Filters.eq("_id",userObjId)).first();
+        Document clientDoc = userInfo.find(Filters.eq("_id",new ObjectId(userObjId))).first();
         if(clientDoc == null)
             throw new IllegalArgumentException("User is not registered with app");
 
-        Object obj = clientDoc.get("friendList");
-        try
-        {
+        ArrayList<String> friendList = new ArrayList<String>();
+        for(Document d:(List<Document>)clientDoc.get("friendList"))
+            friendList.add(d.getString("name"));
 
-        }
-        catch(Exception e)
-        {
-            System.out.println("err: DBManager:getFriendList: "+e);
-            throw new IllegalArgumentException("Some err occured");
-        }
-        return null;
+        return friendList;
     }
 
     public static boolean addFriend(String userId, String friendId)

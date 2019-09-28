@@ -22,6 +22,13 @@ public class RequestProcessor
 
     public static String getUserObjId(String request)
     {
-        return "";
+        return request.split(CommunicationFlags.SEPARATOR_1)[1]
+                .split(CommunicationFlags.SEPARATOR_2)[0];
+    }
+
+    public static String getFriendId(String request)
+    {
+        return request.split(CommunicationFlags.SEPARATOR_1)[1]
+                .split(CommunicationFlags.SEPARATOR_2)[1];
     }
 }

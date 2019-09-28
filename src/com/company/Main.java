@@ -1,5 +1,9 @@
 package com.company;
 
+import com.mongodb.DB;
+
+import java.util.ArrayList;
+
 public class Main
 {
     public static void main(String[] args)
@@ -19,10 +23,16 @@ public class Main
     private static void testFunction()
     {
         //testing the database
-        var test = DBManager.addFriend(DBManager.getUserId("rap","1243"),"gaurav");
-        if(test)
-            System.out.println("Database Updated");
-        else
-            System.out.println("Database failed to Update");
+        String objId = DBManager.getUserId("akash","1234");
+        try
+        {
+            ArrayList<String> list =  DBManager.getFriendList(DBManager.getUserId("akash","1234"));
+            for(String s:list)
+                System.out.println(s);
+        }
+        catch (Exception e)
+        {
+            System.out.println("Exception raised"+e);
+        }
     }
 }
