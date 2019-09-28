@@ -10,9 +10,9 @@ public class Main
     {
         try
         {
-//            new ChatServer(9887);
-//            System.out.println("Server up...");
-            testFunction();
+            new ChatServer(9887);
+            System.out.println("Server up...");
+//            testFunction();
         }
         catch(Exception e)
         {

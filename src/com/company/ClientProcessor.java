@@ -29,6 +29,9 @@ public class ClientProcessor implements Runnable
             int header = RequestProcessor.getHeader(request);
             String username;
             String password;
+            String friendId;
+            String response;
+            String userObjId;
 
             switch (header)
             {
@@ -39,14 +42,15 @@ public class ClientProcessor implements Runnable
                     boolean signedUp = DBManager.signUpUser(username,password);
                     if(signedUp)
                     {
-                        dout.writeUTF(Integer.toString(CommunicationFlags.SIGN_UP_SUCCESSFULL));
+                        response = ResponseGenerator.getSignUpSuccessfulResponse();
                         System.out.println("Signed up successfully");
                     }
                     else
                     {
-                        dout.writeUTF(Integer.toString(CommunicationFlags.SIGN_UP_FAILED));
+                        response = ResponseGenerator.getSignUpFailedResponse();
                         System.out.println("Sign up Failed");
                     }
+                    dout.writeUTF(response);
                     break;
 //---------------------------------------------------------------------------------
                 case CommunicationFlags.LOGIN:
@@ -56,36 +60,33 @@ public class ClientProcessor implements Runnable
                     if(loggedIn)
                     {
                         //@todo manage exception from getUserId
-                        String userObjId = DBManager.getUserId(username,password);
-                        System.out.println(username+":"+userObjId);
-                        String response = CommunicationFlags.LOGIN_SUCCESSFULL + CommunicationFlags.SEPARATOR_1 + userObjId;
-                        dout.writeUTF(response);
+                        userObjId = DBManager.getUserId(username,password);
+                        response = ResponseGenerator.getLoginSuccessfulResponse(userObjId);
                         System.out.println("Login Successfull:" + username);
                     }
                     else
                     {
-                        dout.writeUTF(Integer.toString(CommunicationFlags.LOGIN_FAILED));
+                        response = (ResponseGenerator.getLoginFailedResponse("Login Failed Due to Some Reasons"));
                         System.out.println("Login Failed");
                     }
+                    dout.writeUTF(response);
                     break;
 //---------------------------------------------------------------------------------
                 case CommunicationFlags.GET_FRIEND_LIST:
-                      System.out.println("user Asking for Friend List");
-                      String response = CommunicationFlags.FRIEND_LIST + CommunicationFlags.SEPARATOR_1;
-                      String[] friendlist = {"Rahul","Rishi","Mall"};
-                      response += String.join(CommunicationFlags.SEPARATOR_FRIEND_LIST,friendlist);
-                      dout.writeUTF(response);
+                    userObjId = RequestProcessor.getUserObjId(request);
+                    response = ResponseGenerator.getFriendListResponse(DBManager.getFriendList(userObjId));
+                    dout.writeUTF(response);
                     break;
 //---------------------------------------------------------------------------------
                 case CommunicationFlags.ADD_FRIEND_REQUEST:
-                    String userObjId = RequestProcessor.getUserObjId(request);
-                    String friendId = RequestProcessor.getFriendId(request);
+                    userObjId = RequestProcessor.getUserObjId(request);
+                    friendId = RequestProcessor.getFriendId(request);
                     boolean isFriendAdded = DBManager.addFriend(userObjId,friendId);
 
                     if(isFriendAdded)
-                        response = CommunicationFlags.ADD_FRIEND_RESPONSE_SUCCESSFULL + CommunicationFlags.SEPARATOR_1 + friendId;
+                        response = ResponseGenerator.getAddFriendSuccessfulResponse(friendId);
                     else
-                        response = CommunicationFlags.ADD_FRIEND_RESPONSE_FAILED + CommunicationFlags.SEPARATOR_1 +friendId;
+                        response = ResponseGenerator.getAddFriendFailedResponse("Err due to rainy days");
 
                     dout.writeUTF(response);
                     break;
