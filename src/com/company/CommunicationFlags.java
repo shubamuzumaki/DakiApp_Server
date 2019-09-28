@@ -16,4 +16,7 @@ public interface CommunicationFlags
     int ERR_INVALID_ARGUMENTS = 9;
     int GET_FRIEND_LIST = 10;
     int FRIEND_LIST = 11;
+    int ADD_FRIEND_REQUEST = 12;
+    int ADD_FRIEND_RESPONSE_SUCCESSFULL = 13;
+    int ADD_FRIEND_RESPONSE_FAILED = 14;
 }
