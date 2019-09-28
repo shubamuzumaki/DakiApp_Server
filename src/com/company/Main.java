@@ -6,9 +6,9 @@ public class Main
     {
         try
         {
-            new ChatServer(9887);
-            System.out.println("Server up...");
-//            testFunction();
+//            new ChatServer(9887);
+//            System.out.println("Server up...");
+            testFunction();
         }
         catch(Exception e)
         {
@@ -19,9 +19,10 @@ public class Main
     private static void testFunction()
     {
         //testing the database
-        if(DBManager.logInUser("Shubam","8chcter"))
-            System.out.println("Shubam Logged in Sucessfully");
+        var test = DBManager.addFriend(DBManager.getUserId("rap","1243"),"gaurav");
+        if(test)
+            System.out.println("Database Updated");
         else
-            System.out.println("Signing Up Failed");
+            System.out.println("Database failed to Update");
     }
 }
