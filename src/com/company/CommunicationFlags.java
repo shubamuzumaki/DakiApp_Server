@@ -4,7 +4,8 @@ public interface CommunicationFlags
 {
     String SEPARATOR_1 = "~";
     String SEPARATOR_2 = "@";
-    String SEPARATOR_FRIEND_LIST = "-";
+    String SEPARATOR_3 = "-";
+
     int LOGIN = 1;
     int SIGN_UP = 2;
     int LOGIN_SUCCESSFULL = 3;
@@ -19,4 +20,5 @@ public interface CommunicationFlags
     int ADD_FRIEND_REQUEST = 12;
     int ADD_FRIEND_RESPONSE_SUCCESSFULL = 13;
     int ADD_FRIEND_RESPONSE_FAILED = 14;
+    int GET_MESSAGES = 15;
 }

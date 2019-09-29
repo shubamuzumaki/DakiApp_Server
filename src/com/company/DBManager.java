@@ -69,11 +69,40 @@ public class DBManager
         if(clientDoc == null)
             throw new IllegalArgumentException("User is not registered with app");
 
-        ArrayList<String> friendList = new ArrayList<String>();
+        ArrayList<String> friendList = new ArrayList<>();
         for(Document d:(List<Document>)clientDoc.get("friendList"))
             friendList.add(d.getString("name"));
 
         return friendList;
+    }
+
+    //@TODO raise exception here
+    static ArrayList<String> getMessageList(String userObjId,String friendId) //throws Exception
+    {
+        friendId = friendId.toLowerCase();
+        Document clientDoc = userInfo.find(Filters.eq("_id",new ObjectId(userObjId))).first();
+//        if(clientDoc == null)
+//            throw new IllegalArgumentException("User is not registered with app");
+
+        ArrayList<String> messageList = new ArrayList<>();
+        for(Document d: (List<Document>)clientDoc.get("dropbox"))
+        {
+            String sender = (String) d.get("sender");
+            String message = (String)d.get("message");
+
+            if(friendId.equals(sender))
+                messageList.add(message);
+        }
+
+        //remove messages from the database
+        Document query = new Document(
+                "$pull",
+                new Document("dropbox",
+                        new Document("sender",friendId))
+        );
+
+        userInfo.updateOne(clientDoc,query);
+        return messageList;
     }
 
     public static boolean addFriend(String userId, String friendId)
@@ -95,4 +124,41 @@ public class DBManager
         userInfo.updateOne(clientDoc,update);
         return true;
     }
+
+    static boolean sendMessage(String userId, String friendId , String message)
+    {
+        friendId = friendId.toLowerCase();
+        ObjectId userObjId = new ObjectId(userId);
+
+        Document clientDoc = userInfo.find(Filters.eq("_id", userObjId)).first();
+        if (clientDoc == null)
+            return false;
+
+        String username = (String)clientDoc.get("username");
+        ObjectId friendObjId = null;
+        //@TODO use friendList to send message don't send directly
+        for(Document d:(List<Document>)clientDoc.get("friendList"))
+        {
+            if(friendId.equals(d.getString("name")))
+            {
+                friendObjId = (ObjectId) d.get("objId");
+                break;
+            }
+        }
+
+        if(friendObjId == null) return false;
+
+        Document friendDoc = userInfo.find(Filters.eq("_id",friendObjId)).first();
+
+        Document query = new Document(
+                "$push",
+                new Document("dropbox",
+                        new Document("sender",username).append("message",message))
+        );
+
+        userInfo.updateOne(friendDoc,query);
+        return true;
+    }
+
+
 }

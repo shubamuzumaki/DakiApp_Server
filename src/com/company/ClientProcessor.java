@@ -3,6 +3,7 @@ package com.company;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class ClientProcessor implements Runnable
 {
@@ -20,12 +21,12 @@ public class ClientProcessor implements Runnable
         //process Client here
         try
         {
-            System.out.println("Client Accepted");
+//            System.out.println("Client Accepted");
             DataInputStream din = new DataInputStream(client.getInputStream());
             DataOutputStream dout = new DataOutputStream(client.getOutputStream());
 
             String request = din.readUTF();
-            System.out.println(request);
+//            System.out.println(request);
             int header = RequestProcessor.getHeader(request);
             String username;
             String password;
@@ -91,6 +92,24 @@ public class ClientProcessor implements Runnable
                     dout.writeUTF(response);
                     break;
 //---------------------------------------------------------------------------------
+                case CommunicationFlags.SEND_MSG:
+                    userObjId = RequestProcessor.getUserObjId(request);
+                    friendId = RequestProcessor.getFriendId(request);
+                    String message = RequestProcessor.getMessage(request);
+                    if(DBManager.sendMessage(userObjId,friendId,message))
+                        System.out.println("Message Sent");
+                    else
+                        System.out.println("Failed to deliver Message");
+                    break;
+//---------------------------------------------------------------------------------
+                case CommunicationFlags.GET_MESSAGES:
+                    userObjId = RequestProcessor.getUserObjId(request);
+                    friendId = RequestProcessor.getFriendId(request);
+                    //@TODO add try catch
+                    ArrayList<String> messageList = DBManager.getMessageList(userObjId,friendId);
+
+                    dout.writeUTF(ResponseGenerator.getMessageList(messageList));
+                    break;
             }//switch
         }//try
         catch (Exception e)

@@ -24,8 +24,8 @@ public class Client
 
     public Document toDocument()
     {
-        List<Document> docFriendList = MapToDocList(friendMap,"name","obj_id");
-        List<Document> docDropBoxList = MapToDocList(dropBox,"sender","data");
+        List<Document> docFriendList = MapToDocList(friendMap,"name","objId");
+        List<Document> docDropBoxList = MapToDocList(dropBox,"sender","message");
 
         Document myDoc = new Document("username",username);
         myDoc.append("password",password);

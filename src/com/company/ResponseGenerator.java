@@ -41,7 +41,19 @@ public class ResponseGenerator
                 .append(CommunicationFlags.SEPARATOR_1);
 
         for(String s:friendList)
-            response.append(s).append(CommunicationFlags.SEPARATOR_FRIEND_LIST);
+            response.append(s).append(CommunicationFlags.SEPARATOR_3);
+        return response.toString();
+    }
+
+    static String getMessageList(ArrayList<String> messageList)
+    {
+        StringBuffer response = new StringBuffer();
+        response.append(CommunicationFlags.GET_MESSAGES)
+                .append(CommunicationFlags.SEPARATOR_1);
+
+        for(String s:messageList)
+            response.append(s).append(CommunicationFlags.SEPARATOR_3);
+
         return response.toString();
     }
 }

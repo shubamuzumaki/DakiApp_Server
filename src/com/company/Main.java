@@ -10,10 +10,11 @@ public class Main
     {
         try
         {
-            new ChatServer(9887);
+            new ChatServer(8421);
             System.out.println("Server up...");
 //            testFunction();
         }
+
         catch(Exception e)
         {
             System.out.println("Err in Main: "+e);
@@ -23,16 +24,7 @@ public class Main
     private static void testFunction()
     {
         //testing the database
-        String objId = DBManager.getUserId("akash","1234");
-        try
-        {
-            ArrayList<String> list =  DBManager.getFriendList(DBManager.getUserId("akash","1234"));
-            for(String s:list)
-                System.out.println(s);
-        }
-        catch (Exception e)
-        {
-            System.out.println("Exception raised"+e);
-        }
+        String objId = DBManager.getUserId("gaurav","tagotra");
+        DBManager.addFriend(objId,"akash");
     }
 }

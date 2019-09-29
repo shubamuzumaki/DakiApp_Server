@@ -29,6 +29,15 @@ public class RequestProcessor
     public static String getFriendId(String request)
     {
         return request.split(CommunicationFlags.SEPARATOR_1)[1]
-                .split(CommunicationFlags.SEPARATOR_2)[1];
+                .split(CommunicationFlags.SEPARATOR_2)[1]
+                .split(CommunicationFlags.SEPARATOR_3)[0];
+    }
+
+    public static String getMessage(String request)
+    {
+        //4~7845125df4f5@shubamÆhello there
+        return request.split(CommunicationFlags.SEPARATOR_1)[1]
+                .split(CommunicationFlags.SEPARATOR_2)[1]
+                .split(CommunicationFlags.SEPARATOR_3)[1];
     }
 }
