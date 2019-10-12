@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="SteganoServer:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/SteganoServer_jar</output-path>
+    <root id="archive" name="SteganoServer.jar">
+      <element id="module-output" name="SteganoServer" />
+      <element id="extracted-dir" path="$USER_HOME$/Documents/JDBC_Mongo/bson-3.9.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Documents/JDBC_Mongo/mongodb-driver-3.9.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/Documents/JDBC_Mongo/mongodb-driver-core-3.9.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/annotations/17.0.0/annotations-17.0.0.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

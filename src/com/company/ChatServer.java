@@ -5,7 +5,7 @@ import java.net.*;
 
 public class ChatServer implements Runnable
 {
-    ServerSocket serverSocket;
+    private ServerSocket serverSocket;
 
     ChatServer(int port) throws IOException
     {
